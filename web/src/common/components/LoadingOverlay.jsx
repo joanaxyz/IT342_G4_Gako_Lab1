@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/loading_overlay.css';
+import '../styles/loading-overlay.css';
 
 const LoadingOverlay = ({ isActive }) => {
     return (

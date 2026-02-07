@@ -1,4 +1,4 @@
-@import './common/styles/tokens.css';
+@import './common/styles/variables.css';
 @import './common/styles/components.css';
 
 :root {

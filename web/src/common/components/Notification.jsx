@@ -1,8 +1,8 @@
 import React from 'react';
-import { useNotification } from '../hooks/useNotification';
+import { useNotif } from '../hooks/useContexts';
 
 export const Notification = ({ notification }) => {
-    const { removeNotification } = useNotification();
+    const { removeNotification } = useNotif();
 
     return (
         <div className={`notification notification-${notification.type}`}>
@@ -18,7 +18,7 @@ export const Notification = ({ notification }) => {
 };
 
 export const NotificationContainer = () => {
-    const { notifications } = useNotification();
+    const { notifications } = useNotif();
 
     return (
         <div className="notification-container">

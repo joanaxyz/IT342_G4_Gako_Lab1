@@ -3,15 +3,18 @@ import Register from './auth/routes/Register';
 import Login from './auth/routes/Login';
 import ForgotPassword from './auth/routes/ForgotPassword';
 import Logout from './auth/components/Logout';
-import Dashboard from './dashboard/routes/Dashboard';
-import Profile from './dashboard/routes/Profile';
 import ProtectedRoute from './auth/components/ProtectedRoute';
+import Chatbot from './chatbot/pages/Chatbot';
 import { AuthProvider } from './auth/contexts/AuthContext';
 import { LoadingProvider, ModalProvider } from './common/contexts/ActiveContexts';
 import { NotificationProvider } from './common/contexts/NotificationContext';
+import { ThemeProvider } from './common/contexts/ThemeContext';
+import { DropdownProvider } from './common/contexts/DropdownContext';
 import { NotificationContainer } from './common/components/Notification';
 import LoadingOverlay from './common/components/LoadingOverlay';
 import { useLoading } from './common/hooks/useActive';
+import Admin from './admin/pages/Admin';
+import AdminRoute from './auth/components/AdminRoute';
 
 const AppContent = () => {
   const { active: isLoading } = useLoading();
@@ -24,24 +27,18 @@ const AppContent = () => {
         <Route path="/register" element={<Register/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route 
-          path="/dashboard" 
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
-          path="/profile" 
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          } 
-        />
+        
+        <Route element={<ProtectedRoute />}>
+          <Route path="/chatbot" element={<Chatbot />} />
+        </Route>
+
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<Admin />} />
+        </Route>
+
         <Route path="/logout" element={<Logout />} />
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<Navigate to="/chatbot" replace />} />
+        <Route path="*" element={<Navigate to="/chatbot" replace />} />
       </Routes>
     </>
   );
@@ -50,13 +47,17 @@ const AppContent = () => {
 function App() {
   return (
     <NotificationProvider>
-      <AuthProvider>
-        <LoadingProvider>
-          <ModalProvider>
-            <AppContent />
-          </ModalProvider>
-        </LoadingProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <DropdownProvider>
+            <LoadingProvider>
+              <ModalProvider>
+                <AppContent />
+              </ModalProvider>
+            </LoadingProvider>
+          </DropdownProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </NotificationProvider>
   )
 }
