@@ -1,0 +1,197 @@
+/* =============== MESSAGE ACTIONS =============== */
+.chatbot-page .message-actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: all var(--transition-fast);
+}
+
+.chatbot-page .bot-message:hover .message-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.chatbot-page .user-actions {
+    justify-content: flex-end;
+    margin-top: var(--space-sm);
+    margin-right: var(--space-sm);
+}
+
+.chatbot-page .user-message:hover .user-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =============== ACTION BUTTONS =============== */
+.chatbot-page .action-btn {
+    width: 38px;
+    height: 38px;
+    border: 1.5px solid transparent;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 250, 0.9) 100%);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: 0 2px 6px var(--primary-alpha-08), 0 1px 2px rgba(0, 0, 0, 0.05);
+    position: relative;
+    flex-shrink: 0;
+}
+
+.chatbot-page .action-btn:hover {
+    transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 4px 12px var(--primary-alpha-15), 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.chatbot-page .action-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.chatbot-page .action-btn.active {
+    background: linear-gradient(135deg, rgba(91, 143, 207, 0.18) 0%, rgba(111, 163, 231, 0.12) 100%);
+    border-color: var(--primary-blue);
+    box-shadow: 0 3px 10px var(--primary-alpha-25), 0 1px 3px var(--primary-alpha-15);
+}
+
+.chatbot-page .action-btn.active svg {
+    color: var(--primary-blue);
+}
+
+.chatbot-page .action-btn.active.like-btn {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, rgba(91, 143, 207, 0.95) 100%);
+    border-color: var(--primary-blue);
+    box-shadow: 0 3px 10px var(--primary-alpha-35), 0 1px 3px var(--primary-alpha-20);
+    transform: translateY(-2px) scale(1.05);
+}
+
+.chatbot-page .action-btn.active.like-btn svg {
+    color: white;
+}
+
+.chatbot-page .action-btn.active.dislike-btn {
+    background: linear-gradient(135deg, var(--primary-blue-dark) 0%, rgba(74, 125, 191, 0.95) 100%);
+    border-color: var(--primary-blue-dark);
+    box-shadow: 0 3px 10px rgba(74, 125, 191, 0.35), 0 1px 3px rgba(74, 125, 191, 0.2);
+    transform: translateY(-2px) scale(1.05);
+}
+
+.chatbot-page .action-btn.active.dislike-btn svg {
+    color: white;
+}
+
+.chatbot-page .action-btn.copy-btn {
+    background: linear-gradient(135deg, var(--primary-alpha-08) 0%, rgba(111, 163, 231, 0.05) 100%);
+    border-color: var(--primary-alpha-15);
+}
+
+.chatbot-page .action-btn.copy-btn:hover {
+    background: linear-gradient(135deg, var(--primary-alpha-15) 0%, rgba(125, 174, 240, 0.1) 100%);
+    border-color: var(--secondary-accent);
+    box-shadow: 0 4px 12px var(--primary-alpha-20), 0 2px 4px var(--primary-alpha-10);
+}
+
+.chatbot-page .action-btn.copy-btn svg {
+    color: var(--primary-blue);
+}
+
+.chatbot-page .action-btn.edit-btn {
+    background: linear-gradient(135deg, rgba(74, 125, 191, 0.08) 0%, var(--primary-alpha-05) 100%);
+    border-color: rgba(74, 125, 191, 0.15);
+}
+
+.chatbot-page .action-btn.edit-btn:hover {
+    background: linear-gradient(135deg, rgba(74, 125, 191, 0.15) 0%, var(--primary-alpha-10) 100%);
+    border-color: var(--primary-blue-dark);
+    box-shadow: 0 4px 12px rgba(74, 125, 191, 0.2), 0 2px 4px var(--primary-alpha-10);
+}
+
+.chatbot-page .action-btn.edit-btn svg {
+    color: var(--primary-blue-dark);
+}
+
+.chatbot-page .action-btn.retry-btn {
+    background: linear-gradient(135deg, rgba(111, 163, 231, 0.08) 0%, rgba(125, 174, 240, 0.05) 100%);
+    border-color: rgba(111, 163, 231, 0.15);
+}
+
+.chatbot-page .action-btn.retry-btn:hover {
+    background: linear-gradient(135deg, rgba(111, 163, 231, 0.15) 0%, rgba(125, 174, 240, 0.1) 100%);
+    border-color: var(--primary-blue-light);
+    box-shadow: 0 4px 12px rgba(111, 163, 231, 0.2), 0 2px 4px rgba(111, 163, 231, 0.1);
+}
+
+.chatbot-page .action-btn.retry-btn svg {
+    color: var(--secondary-accent);
+}
+
+.chatbot-page .action-btn.like-btn {
+    background: linear-gradient(135deg, var(--primary-alpha-08) 0%, rgba(111, 163, 231, 0.05) 100%);
+    border-color: var(--primary-alpha-15);
+}
+
+.chatbot-page .action-btn.like-btn:hover {
+    background: linear-gradient(135deg, var(--primary-alpha-15) 0%, rgba(111, 163, 231, 0.1) 100%);
+    border-color: var(--primary-blue);
+    box-shadow: 0 4px 12px var(--primary-alpha-20), 0 2px 4px var(--primary-alpha-10);
+}
+
+.chatbot-page .action-btn.like-btn svg {
+    color: var(--primary-blue);
+}
+
+.chatbot-page .action-btn.dislike-btn {
+    background: linear-gradient(135deg, rgba(74, 125, 191, 0.08) 0%, var(--primary-alpha-05) 100%);
+    border-color: rgba(74, 125, 191, 0.15);
+}
+
+.chatbot-page .action-btn.dislike-btn:hover {
+    background: linear-gradient(135deg, rgba(74, 125, 191, 0.15) 0%, var(--primary-alpha-10) 100%);
+    border-color: var(--primary-blue-dark);
+    box-shadow: 0 4px 12px rgba(74, 125, 191, 0.2), 0 2px 4px rgba(74, 125, 191, 0.1);
+}
+
+.chatbot-page .action-btn.dislike-btn svg {
+    color: var(--primary-blue-dark);
+}
+
+.chatbot-page .action-btn.delete-btn {
+    background: linear-gradient(135deg, rgba(74, 125, 191, 0.08) 0%, var(--primary-alpha-05) 100%);
+    border-color: rgba(74, 125, 191, 0.15);
+}
+
+.chatbot-page .action-btn.delete-btn:hover {
+    background: linear-gradient(135deg, rgba(74, 125, 191, 0.15) 0%, var(--primary-alpha-10) 100%);
+    border-color: var(--primary-blue-dark);
+    box-shadow: 0 4px 12px var(--primary-alpha-25), 0 2px 4px var(--primary-alpha-15);
+}
+
+.chatbot-page .action-btn.delete-btn svg {
+    color: var(--primary-blue-dark);
+}
+
+.chatbot-page .action-btn svg {
+    width: 19px;
+    height: 19px;
+    transition: all var(--transition-fast);
+}
+
+.chatbot-page .action-btn:hover svg {
+    transform: scale(1.1);
+}
+
+/* =============== THEME =============== */
+body[data-theme="dark"] .chatbot-page .action-btn {
+    background: var(--bg-tertiary-dark);
+}
+
+body[data-theme="dark"] .chatbot-page .action-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+body[data-theme="dark"] .chatbot-page .action-btn.active {
+    background: linear-gradient(135deg, rgba(91, 143, 207, 0.2) 0%, rgba(125, 174, 240, 0.2) 100%);
+    border-color: var(--primary-blue);
+}

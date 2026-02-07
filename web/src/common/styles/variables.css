@@ -1,0 +1,141 @@
+:root {
+  /* ====== PRIMARY COLORS ====== */
+  --primary-color: #5B8FCF;
+  --primary-hover: #4A7DBF;
+  --primary-blue: #5B8FCF;
+  --primary-blue-light: #7DAEF0;
+  --primary-blue-dark: #4A7DBF;
+  --primary-blue-hover: #5B8FCF;
+  
+  --secondary-color: #6FA3E7;
+
+  /* ====== SECONDARY COLORS ====== */
+  --secondary-accent: #6FA3E7;
+  --accent-light: #9AC5F4;
+  --accent-lighter: #BBDEFB;
+
+  /* ====== SEMANTIC COLORS ====== */
+  --success: #2ED573;
+  --success-dark: #26C961;
+  --success-light: #45E089;
+  --error: #E74C5E;
+  --error-dark: #D43F52;
+  --error-light: #FF6B7A;
+  --warning: #FFC107;
+  --warning-dark: #FF9800;
+  --info: #5B8FCF;
+
+  /* ====== PRIMARY ALPHA (for overlays/borders) ====== */
+  --primary-alpha-05: rgba(91, 143, 207, 0.05);
+  --primary-alpha-08: rgba(91, 143, 207, 0.08);
+  --primary-alpha-10: rgba(91, 143, 207, 0.1);
+  --primary-alpha-12: rgba(91, 143, 207, 0.12);
+  --primary-alpha-15: rgba(91, 143, 207, 0.15);
+  --primary-alpha-20: rgba(91, 143, 207, 0.2);
+  --primary-alpha-25: rgba(91, 143, 207, 0.25);
+  --primary-alpha-35: rgba(91, 143, 207, 0.35);
+  --primary-alpha-40: rgba(91, 143, 207, 0.4);
+  --primary-alpha-50: rgba(91, 143, 207, 0.5);
+  --primary-alpha-60: rgba(91, 143, 207, 0.6);
+
+  /* ====== BACKGROUND COLORS - LIGHT THEME ====== */
+  --background-color: #FFFFFF;
+  --surface-color: #FFFFFF;
+  --bg-primary-light: #FFFFFF;
+  --bg-secondary-light: #F5F7FA;
+  --bg-tertiary-light: #EBF0F5;
+  --sidebar-bg: linear-gradient(135deg, rgba(60, 93, 156, 0.35) 0%, rgba(75, 125, 191, 0.25) 100%);
+  --content-bg: rgba(255, 255, 255, 0.95);
+
+  /* ====== BACKGROUND COLORS - DARK THEME ====== */
+  --bg-primary-dark: #0F1419;
+  --bg-secondary-dark: #1A1E2E;
+  --bg-tertiary-dark: #252B3B;
+  --sidebar-bg-dark: linear-gradient(135deg, rgba(40, 60, 100, 0.6) 0%, rgba(30, 50, 80, 0.5) 100%);
+  --content-bg-dark: rgba(15, 20, 25, 0.95);
+
+  /* ====== TEXT COLORS - LIGHT THEME ====== */
+  --text-primary: #1A1A2E;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  --text-disabled: #CCCCCC;
+
+  /* ====== TEXT COLORS - DARK THEME ====== */
+  --text-primary-dark: #F0F0F0;
+  --text-secondary-dark: #B8B8B8;
+  --text-tertiary-dark: #808080;
+  --text-disabled-dark: #555555;
+
+  /* ====== BORDER COLORS ====== */
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-light: rgba(0, 0, 0, 0.08);
+  --border-dark: rgba(255, 255, 255, 0.15);
+  --border-focus: rgba(91, 143, 207, 0.3);
+
+  /* ====== BORDER RADIUS ====== */
+  --border-radius: 8px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 18px;
+  --border-radius-lg: 30px;
+  --border-radius-xl: 40px;
+
+  /* ====== SHADOWS ====== */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.2);
+  --shadow-2xl: 0 20px 48px rgba(0, 0, 0, 0.25);
+
+  /* ====== TRANSITIONS ====== */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slower: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ====== TYPOGRAPHY ====== */
+  --font-family-primary: 'Roboto', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', sans-serif;
+  --font-family-mono: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+
+  --line-height-tight: 1.3;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* ====== SPACING (use --space-* everywhere) ====== */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 48px;
+  
+  /* ====== FORM DIMENSIONS ====== */
+  --input-height: 48px;
+  --button-height: 48px;
+
+  /* ====== Z-INDEX ====== */
+  --z-dropdown: 1000;
+  --z-modal: 9000;
+  --z-overlay: 9999;
+}

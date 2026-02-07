@@ -13,8 +13,6 @@ import { DropdownProvider } from './common/contexts/DropdownContext';
 import { NotificationContainer } from './common/components/Notification';
 import LoadingOverlay from './common/components/LoadingOverlay';
 import { useLoading } from './common/hooks/useActive';
-import Admin from './admin/pages/Admin';
-import AdminRoute from './auth/components/AdminRoute';
 
 const AppContent = () => {
   const { active: isLoading } = useLoading();
@@ -30,10 +28,6 @@ const AppContent = () => {
         
         <Route element={<ProtectedRoute />}>
           <Route path="/chatbot" element={<Chatbot />} />
-        </Route>
-
-        <Route element={<AdminRoute />}>
-          <Route path="/admin" element={<Admin />} />
         </Route>
 
         <Route path="/logout" element={<Logout />} />

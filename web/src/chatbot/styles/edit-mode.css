@@ -1,0 +1,128 @@
+/* =============== EDIT MODE =============== */
+.chatbot-page .edit-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    width: 80%;
+    max-width: 100%;
+    animation: slideDown 0.2s ease-out;
+}
+
+.chatbot-page .edit-textarea {
+    padding: var(--space-md);
+    border: 2px solid var(--primary-blue);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-primary);
+    background: var(--bg-secondary-light);
+    resize: vertical;
+    min-height: 60px;
+    max-height: 200px;
+    overflow-y: auto;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    box-shadow: 0 2px 8px var(--primary-alpha-15);
+}
+
+.chatbot-page .edit-textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chatbot-page .edit-textarea::-webkit-scrollbar-track {
+    background: var(--primary-alpha-08);
+    border-radius: 10px;
+}
+
+.chatbot-page .edit-textarea::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: all var(--transition-fast);
+}
+
+.chatbot-page .edit-textarea::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--primary-blue-light) 0%, var(--primary-blue) 100%);
+}
+
+.chatbot-page .edit-textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue-light);
+    box-shadow: 0 4px 12px var(--primary-alpha-25);
+}
+
+body[data-theme="dark"] .chatbot-page .edit-textarea {
+    background: var(--bg-secondary-dark);
+    color: var(--text-primary-dark);
+    border-color: var(--primary-blue);
+}
+
+body[data-theme="dark"] .chatbot-page .edit-textarea:focus {
+    box-shadow: 0 4px 12px var(--primary-alpha-35);
+}
+
+.chatbot-page .edit-actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: flex-end;
+}
+
+.chatbot-page .edit-action-btn {
+    width: 36px;
+    height: 36px;
+    padding: var(--space-xs);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chatbot-page .edit-action-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.chatbot-page .edit-action-btn.save-btn {
+    background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.chatbot-page .edit-action-btn.save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, #66BB6A 0%, #81C784 100%);
+}
+
+.chatbot-page .edit-action-btn.save-btn:active {
+    transform: translateY(0);
+}
+
+.chatbot-page .edit-action-btn.cancel-btn {
+    background: rgba(244, 67, 54, 0.1);
+    color: #f44336;
+    border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.chatbot-page .edit-action-btn.cancel-btn:hover {
+    background: rgba(244, 67, 54, 0.2);
+    transform: translateY(-2px);
+}
+
+.chatbot-page .edit-action-btn.cancel-btn:active {
+    transform: translateY(0);
+}
+
+body[data-theme="dark"] .chatbot-page .edit-action-btn.cancel-btn {
+    background: rgba(244, 67, 54, 0.15);
+    color: #ef5350;
+    border-color: rgba(244, 67, 54, 0.4);
+}
+
+body[data-theme="dark"] .chatbot-page .edit-action-btn.cancel-btn:hover {
+    background: rgba(244, 67, 54, 0.25);
+}

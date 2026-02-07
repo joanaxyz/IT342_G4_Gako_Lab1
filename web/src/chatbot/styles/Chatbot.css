@@ -1,0 +1,11 @@
+/* Chatbot styles bundle – one entry for the chatbot feature */
+@import './globals.css';
+@import './sidebar.css';
+@import './chat-header.css';
+@import './messages.css';
+@import './message-actions.css';
+@import './input.css';
+@import './preset-options.css';
+@import './edit-mode.css';
+@import './search-overlay.css';
+@import './responsive.css';

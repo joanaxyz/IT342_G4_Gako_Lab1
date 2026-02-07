@@ -1,0 +1,168 @@
+/* =============== PRESET OPTIONS =============== */
+.chatbot-page .preset-options-container {
+    padding: var(--space-2xl);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.chatbot-page .preset-options-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-2xl);
+}
+
+.chatbot-page .preset-options-title {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--primary-alpha-50);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--primary-alpha-08);
+    border-radius: 100px;
+    border: 1px solid var(--primary-alpha-15);
+}
+
+body:not([data-theme="dark"]) .chatbot-page .preset-options-title {
+    color: var(--primary-blue);
+    background: var(--primary-alpha-05);
+    border-color: var(--primary-alpha-12);
+}
+
+.chatbot-page .preset-icon {
+    font-size: var(--font-size-sm);
+    color: var(--primary-blue-light);
+}
+
+body:not([data-theme="dark"]) .chatbot-page .preset-icon {
+    color: var(--primary-blue);
+}
+
+.chatbot-page .preset-options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+}
+
+.chatbot-page .preset-option {
+    padding: var(--space-lg) var(--space-xl);
+    background: var(--primary-alpha-05);
+    border: 1px solid var(--primary-alpha-12);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+body:not([data-theme="dark"]) .chatbot-page .preset-option {
+    background: white;
+    border-color: var(--primary-alpha-15);
+    box-shadow: 0 2px 8px var(--primary-alpha-08);
+}
+
+.chatbot-page .preset-option::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary-alpha-10) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.chatbot-page .preset-option:hover {
+    border-color: var(--primary-alpha-35);
+    background: var(--primary-alpha-10);
+    transform: translateY(-2px);
+}
+
+body:not([data-theme="dark"]) .chatbot-page .preset-option:hover {
+    border-color: var(--primary-blue);
+    background: var(--primary-alpha-05);
+    box-shadow: 0 6px 20px var(--primary-alpha-12);
+}
+
+.chatbot-page .preset-option:hover::before {
+    opacity: 1;
+}
+
+.chatbot-page .preset-option:active {
+    transform: translateY(0) scale(0.99);
+    transition: transform 0.1s;
+}
+
+.chatbot-page .preset-option-text {
+    font-size: var(--font-size-base);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    position: relative;
+    z-index: 1;
+}
+
+body:not([data-theme="dark"]) .chatbot-page .preset-option-text {
+    color: var(--text-primary);
+}
+
+.chatbot-page .preset-option-icon {
+    font-size: 11px;
+    color: var(--primary-blue);
+    flex-shrink: 0;
+    margin-top: var(--space-xs);
+    opacity: 0.6;
+    transition: all var(--transition-fast);
+}
+
+.chatbot-page .preset-option:hover .preset-option-icon {
+    opacity: 1;
+    transform: translateX(3px);
+    color: var(--primary-blue-light);
+}
+
+body:not([data-theme="dark"]) .chatbot-page .preset-option:hover .preset-option-icon {
+    color: var(--primary-blue);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .chatbot-page .preset-options-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .chatbot-page .preset-options-container {
+        padding: var(--space-xl);
+    }
+
+    .chatbot-page .preset-options-grid {
+        gap: var(--space-md);
+    }
+
+    .chatbot-page .preset-option {
+        padding: var(--space-md) var(--space-lg);
+    }
+
+    .chatbot-page .preset-options-title {
+        font-size: 13px;
+    }
+
+    .chatbot-page .preset-option-text {
+        font-size: var(--font-size-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .chatbot-page .preset-options-header {
+        margin-bottom: var(--space-xl);
+    }
+
+    .chatbot-page .preset-option {
+        padding: var(--space-md);
+    }
+}
