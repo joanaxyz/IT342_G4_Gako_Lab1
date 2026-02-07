@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuthAPI } from '../hook/useAuthApi';
-import { useAuth } from '../hook/useAuth';
+import { useAuthAPI } from '../hooks/useAuthApi';
+import { useAuth } from '../hooks/useAuth';
 import AuthLayout from '../layouts/AuthLayout';
 import FieldInput from '../../common/components/FieldInput';
 import Button from '../../common/components/Button';
-import { useNotification } from '../../common/hooks/useNotification';
+import { useNotif } from '../../common/hooks/useContexts';
 
 const Login = () => {
     const [formData, setFormData] = useState({
         username: '',
         password: ''
     });
-    const { addNotification } = useNotification();
+    const { addNotification } = useNotif();
     const { setSession } = useAuth();
     const authAPI = useAuthAPI();
     const navigate = useNavigate();
@@ -48,8 +48,8 @@ const Login = () => {
                 setSession(response.data.accessToken, response.data.refreshToken);
                 addNotification('Successfully logged in!', 'success');
                 
-                // Redirect to the page they were trying to access, or dashboard
-                const origin = location.state?.from?.pathname || '/dashboard';
+                // Redirect to the page they were trying to access, or chatbot
+                const origin = location.state?.from?.pathname || '/chatbot';
                 navigate(origin, { replace: true });
             } else {
                 addNotification(response.message || 'Login failed. Please check your credentials.', 'error');
@@ -63,7 +63,7 @@ const Login = () => {
     return (
         <AuthLayout
             title="Welcome Back"
-            subtitle="Enter your details to access your BrainBox"
+            subtitle="Enter your details to access StudentLink"
         >
             <form onSubmit={handleSubmit}>
                 <FieldInput
@@ -84,23 +84,21 @@ const Login = () => {
                     required
                 />
 
-                <div style={{ textAlign: 'right', marginBottom: 'var(--spacing-md)' }}>
-                    <Link to="/forgot-password" style={{ fontSize: '0.875rem', color: 'var(--primary-color)', textDecoration: 'none' }}>
+                <div style={{ textAlign: 'right', marginBottom: '1.5rem' }}>
+                    <Link to="/forgot-password" size="sm" className="auth-link" style={{ fontSize: '0.875rem' }}>
                         Forgot password?
                     </Link>
                 </div>
 
-                <div style={{ marginTop: 'var(--spacing-lg)' }}>
+                <div style={{ marginTop: '2rem' }}>
                     <Button type="submit" fullWidth>
                         Log In
                     </Button>
                 </div>
             </form>
 
-            <div style={{ marginTop: 'var(--spacing-md)', textAlign: 'center' }}>
-                <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                    Don't have an account? <Link to="/register" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'none' }}>Sign up</Link>
-                </p>
+            <div className="auth-footer-text">
+                Don't have an account? <Link to="/register" className="auth-link">Sign up</Link>
             </div>
         </AuthLayout>
     );

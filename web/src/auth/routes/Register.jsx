@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuthAPI } from '../hook/useAuthApi';
+import { useAuthAPI } from '../hooks/useAuthApi';
 import AuthLayout from '../layouts/AuthLayout';
 import FieldInput from '../../common/components/FieldInput';
 import Button from '../../common/components/Button';
-import { useNotification } from '../../common/hooks/useNotification';
+import { useNotif } from '../../common/hooks/useContexts';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ const Register = () => {
         password: '',
         confirmPassword: ''
     });
-    const { addNotification } = useNotification();
+    const { addNotification } = useNotif();
     const authAPI = useAuthAPI();
     const navigate = useNavigate();
 
@@ -55,7 +55,7 @@ const Register = () => {
     return (
         <AuthLayout
             title="Create an Account"
-            subtitle="Join BrainBox and build your second memory"
+            subtitle="Your campus chat for university information"
         >
             <form onSubmit={handleSubmit}>
                 <FieldInput
@@ -94,17 +94,15 @@ const Register = () => {
                     required
                 />
 
-                <div style={{ marginTop: 'var(--spacing-lg)' }}>
+                <div style={{ marginTop: '2rem' }}>
                     <Button type="submit" fullWidth>
                         Register
                     </Button>
                 </div>
             </form>
 
-            <div style={{ marginTop: 'var(--spacing-md)', textAlign: 'center' }}>
-                <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                    Already have an account? <Link to="/login" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'none' }}>Log in</Link>
-                </p>
+            <div className="auth-footer-text">
+                Already have an account? <Link to="/login" className="auth-link">Log in</Link>
             </div>
         </AuthLayout>
     );

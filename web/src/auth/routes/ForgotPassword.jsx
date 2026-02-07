@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuthAPI } from '../hook/useAuthApi';
+import { useAuthAPI } from '../hooks/useAuthApi';
 import AuthLayout from '../layouts/AuthLayout';
 import FieldInput from '../../common/components/FieldInput';
 import Button from '../../common/components/Button';
-import { useNotification } from '../../common/hooks/useNotification';
+import { useNotif } from '../../common/hooks/useContexts';
 import '../styles/ForgotPassword.css';
 
 const STEPS = {
@@ -24,7 +24,7 @@ const ForgotPassword = () => {
     const [resetToken, setResetToken] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { addNotification } = useNotification();
+    const { addNotification } = useNotif();
     const authAPI = useAuthAPI();
     const navigate = useNavigate();
     const inputRefs = useRef([]);
@@ -41,7 +41,7 @@ const ForgotPassword = () => {
             } else {
                 addNotification(response.message || 'Failed to send verification code', 'error');
             }
-        } catch (err) {
+        } catch {
             addNotification('A network error occurred', 'error');
         } finally {
             setIsLoading(false);
@@ -104,7 +104,7 @@ const ForgotPassword = () => {
             } else {
                 addNotification(response.message || 'Invalid verification code', 'error');
             }
-        } catch (err) {
+        } catch {
             addNotification('A network error occurred', 'error');
         } finally {
             setIsLoading(false);
@@ -133,7 +133,7 @@ const ForgotPassword = () => {
             } else {
                 addNotification(response.message || 'Failed to reset password', 'error');
             }
-        } catch (err) {
+        } catch {
             addNotification('A network error occurred', 'error');
         } finally {
             setIsLoading(false);
@@ -153,7 +153,7 @@ const ForgotPassword = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
-                        <div style={{ marginTop: 'var(--spacing-lg)' }}>
+                        <div style={{ marginTop: '2rem' }}>
                             <Button type="submit" fullWidth isLoading={isLoading}>
                                 Send Reset Code
                             </Button>
@@ -180,12 +180,12 @@ const ForgotPassword = () => {
                                 />
                             ))}
                         </div>
-                        <div style={{ marginTop: 'var(--spacing-lg)' }}>
+                        <div style={{ marginTop: '2rem' }}>
                             <Button type="submit" fullWidth isLoading={isLoading}>
                                 Verify Code
                             </Button>
                         </div>
-                        <div style={{ marginTop: 'var(--spacing-md)', textAlign: 'center' }}>
+                        <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
                             <button 
                                 type="button" 
                                 className="text-button" 
@@ -218,7 +218,7 @@ const ForgotPassword = () => {
                             onChange={handlePasswordChange}
                             required
                         />
-                        <div style={{ marginTop: 'var(--spacing-lg)' }}>
+                        <div style={{ marginTop: '2rem' }}>
                             <Button type="submit" fullWidth isLoading={isLoading}>
                                 Reset Password
                             </Button>
@@ -248,10 +248,8 @@ const ForgotPassword = () => {
     return (
         <AuthLayout title={title} subtitle={subtitle}>
             {renderStep()}
-            <div style={{ marginTop: 'var(--spacing-md)', textAlign: 'center' }}>
-                <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                    Remember your password? <Link to="/login" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'none' }}>Log in</Link>
-                </p>
+            <div className="auth-footer-text">
+                Remember your password? <Link to="/login" className="auth-link">Log in</Link>
             </div>
         </AuthLayout>
     );

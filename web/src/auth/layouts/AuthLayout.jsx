@@ -16,11 +16,11 @@ const AuthLayout = ({ title, subtitle, children }) => {
     <div className="auth-page-container">
       <div className="auth-left-panel">
         <div className="auth-brand">
-          <img src={logo} alt="BrainBox Logo" className="auth-logo" />
-          <h2 className="auth-brand-name">BrainBox</h2>
+          <img src={logo} alt="StudentLink Logo" className="auth-logo" />
+          <h2 className="auth-brand-name">StudentLink</h2>
         </div>
         <p className="auth-description">
-          BrainBox isn’t a notebook. It’s a place to offload memory, organize thought, and recall with clarity.
+          StudentLink is your campus chat for university information—events, directions, services, and answers.
         </p>
       </div>
       <div className="auth-right-panel">

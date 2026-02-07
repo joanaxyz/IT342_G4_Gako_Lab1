@@ -40,6 +40,9 @@ export const AuthProvider = ({ children }) => {
         }
         deleteCookie('accessToken');
         deleteCookie('refreshToken');
+        
+        // Push state updates to next tick to avoid cascading render warning in some contexts
+        await Promise.resolve();
         setIsAuthenticated(false);
         setUser(null);
     }, []);
@@ -47,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     const refreshAccessToken = useCallback(async () => {
         const refreshToken = getCookie('refreshToken');
         if (!refreshToken) {
-            logout();
+            await logout();
             return null;
         }
 
@@ -75,13 +78,15 @@ export const AuthProvider = ({ children }) => {
         const refreshToken = getCookie('refreshToken');
         const accessToken = getCookie('accessToken');
 
-        if (refreshToken && !accessToken) {
-            refreshAccessToken();
-        } else if (!refreshToken && isAuthenticated) {
-            logout();
-        } else if (isAuthenticated && !user) {
-            fetchUser();
-        }
+        Promise.resolve().then(() => {
+            if (refreshToken && !accessToken) {
+                refreshAccessToken();
+            } else if (!refreshToken && isAuthenticated) {
+                logout();
+            } else if (isAuthenticated && !user) {
+                fetchUser();
+            }
+        });
     }, [isAuthenticated, refreshAccessToken, logout, fetchUser, user]);
 
     // Token refresh interval (e.g., every 15 minutes)

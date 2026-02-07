@@ -37,7 +37,7 @@ export const useAuthAPI = () => {
             showSpinner), [withLoading]
         ),
         resetPassword: useCallback(
-            (id, newPassword, showSpinner = true) => withLoading(() => baseAuthAPI.resetPassword(id, newPassword),
+            (token, newPassword, showSpinner = true) => withLoading(() => baseAuthAPI.resetPassword(token, newPassword),
             showSpinner), [withLoading]
         ),
         logout: useCallback(
