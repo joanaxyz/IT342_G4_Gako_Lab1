@@ -12,3 +12,10 @@
 - **Login page**: DONE - 30d9dd45c4fe348cc84210a5d4eab5dac398862f
 - **Dashboard/Profile page (protected)**: DONE - 30d9dd45c4fe348cc84210a5d4eab5dac398862f
 - **Logout functionality**: DONE - 0e653893dbd8f7e292ff9b57abab32e6e69b7371
+
+## 3. Mobile Application (Kotlin)
+- **Register screen**: DONE - ddf46b45c1dae37c6a7953a7a31cda5590270ffb
+- **Login screen**: DONE - ddf46b45c1dae37c6a7953a7a31cda5590270ffb
+- **Dashboard/Profile screen (protected)**: DONE - ddf46b45c1dae37c6a7953a7a31cda5590270ffb
+- **Logout functionality**: DONE - ddf46b45c1dae37c6a7953a7a31cda5590270ffb
+- **Connection to the same Spring Boot backend**: DONE - ddf46b45c1dae37c6a7953a7a31cda5590270ffb

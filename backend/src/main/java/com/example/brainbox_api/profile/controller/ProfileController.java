@@ -19,7 +19,7 @@ public class ProfileController {
     private final ProfileService profileService;
     @RequireAuth
     @GetMapping("/me")
-    public ResponseEntity<ProfileResponse> getProfile(@RequestAttribute("userId") Long userId) {
+    public ResponseEntity<ProfileResponse> getProfile(@RequestAttribute Long userId) {
         return ResponseEntity.ok(profileService.getProfile(userId));
     }
 }
