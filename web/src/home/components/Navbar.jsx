@@ -1,6 +1,6 @@
 import { Menu, Bell, HelpCircle } from 'lucide-react';
 import ProfileDropdown from './ProfileDropdown';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.svg';
 
 const Navbar = ({ onToggleSidebar }) => {
     return (

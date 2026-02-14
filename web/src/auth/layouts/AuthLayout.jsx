@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/AuthLayout.css';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.svg';
 
 /**
  * AuthLayout - A reusable layout component for authentication pages.

@@ -1,13 +1,20 @@
 :root {
-  /* Colors */
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
+  /* BrainBox – focused learning palette */
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-muted: #e0e7ff;
+  --accent-warm: #d97706;
+  --accent-warm-muted: #fef3c7;
   --secondary-color: #64748b;
   --background-color: #f8fafc;
+  --background-subtle: #f1f5f9;
   --surface-color: #ffffff;
-  --text-primary: #1e293b;
+  --surface-raised: #ffffff;
+  --text-primary: #0f172a;
   --text-secondary: #64748b;
+  --text-muted: #94a3b8;
   --border-color: #e2e8f0;
+  --border-subtle: #f1f5f9;
   --error-color: #ef4444;
   --success-color: #22c55e;
 
@@ -15,13 +22,21 @@
   --input-height: 48px;
   --button-height: 48px;
   --border-radius: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
   --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.08), 0 2px 6px -2px rgb(0 0 0 / 0.04);
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-card-hover: 0 10px 25px -5px rgb(0 0 0 / 0.08), 0 4px 10px -4px rgb(0 0 0 / 0.06);
 }
