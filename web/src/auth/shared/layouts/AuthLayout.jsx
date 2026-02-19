@@ -1,17 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import '../styles/AuthLayout.css';
-import logo from '../../assets/logo.svg';
+import logo from '../../../assets/logo.svg';
 
 /**
- * AuthLayout - A reusable layout component for authentication pages.
- * 
- * @param {Object} props
- * @param {string} props.title - The title to display in the header
- * @param {string} [props.subtitle] - Optional subtitle for the header
- * @param {React.ReactNode} props.children - The content to render inside the card
+ * AuthLayout - A reusable layout component for authentication pages using Outlet.
  */
-const AuthLayout = ({ title, subtitle, children }) => {
-  
+const AuthLayout = () => {
+  const [header, setHeader] = useState({ title: '', subtitle: '' });
+
   return (
     <div className="auth-page-container">
       <div className="auth-left-panel">
@@ -26,11 +23,11 @@ const AuthLayout = ({ title, subtitle, children }) => {
       <div className="auth-right-panel">
         <div className="auth-card">
           <header className="auth-header">
-            <h1 className="auth-title">{title}</h1>
-            {subtitle && <p className="auth-subtitle">{subtitle}</p>}
+            <h1 className="auth-title">{header.title}</h1>
+            {header.subtitle && <p className="auth-subtitle">{header.subtitle}</p>}
           </header>
           <main className="auth-content">
-            {children}
+            <Outlet context={{ setHeader }} />
           </main>
         </div>
       </div>

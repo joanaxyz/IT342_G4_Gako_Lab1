@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         sessionManager = SessionManager(this)
+        RetrofitClient.init(sessionManager)
 
         // Redirect if already logged in
         if (sessionManager.fetchAuthToken() != null) {

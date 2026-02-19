@@ -21,6 +21,7 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         sessionManager = SessionManager(this)
+        RetrofitClient.init(sessionManager)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -42,10 +43,7 @@ class ProfileActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                // ApiService expects "Bearer <token>" usually if it uses standard JWT interceptors on backend
-                // or just the token if that's how it's handled. 
-                // Looking at ApiService.kt, it takes @Header("Authorization") token: String
-                val response = RetrofitClient.apiService.getUserProfile("Bearer $token")
+                val response = RetrofitClient.apiService.getUserProfile()
                 
                 findViewById<TextView>(R.id.username_value).text = response.username
                 findViewById<TextView>(R.id.email_value).text = response.email
