@@ -18,7 +18,7 @@ class AuthInterceptor(private val sessionManager: SessionManager) : Interceptor 
         val response = chain.proceed(requestBuilder.build())
 
         // Handle 401 Unauthorized
-        if (response.code == 401) {
+        if (response.code() == 401) {
             val refreshToken = sessionManager.fetchRefreshToken()
             if (refreshToken != null) {
                 // Synchronously refresh token

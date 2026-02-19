@@ -1,12 +1,11 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.kotlinCompose)
 }
 
 android {
     namespace = "com.it342.brainbox"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.it342.brainbox"
@@ -39,6 +38,9 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
         resources {
