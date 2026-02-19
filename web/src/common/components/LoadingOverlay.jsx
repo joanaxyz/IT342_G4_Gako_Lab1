@@ -4,8 +4,16 @@ import '../styles/loading_overlay.css';
 const LoadingOverlay = ({ isActive }) => {
     return (
         <div className={`loading-overlay ${isActive ? 'active' : ''}`}>
-            <div className="loading-spinner">
-                <div className="spinner"></div>
+            <div className="running-box-container">
+                <div className="logo-box">
+                    <div className="box-face top"></div>
+                    <div className="box-face left"></div>
+                    <div className="box-face right"></div>
+                    <div className="box-face back"></div>
+                    <div className="box-face bottom"></div>
+                    <div className="box-face left-back"></div>
+                </div>
+                <div className="shadow"></div>
             </div>
         </div>
     );

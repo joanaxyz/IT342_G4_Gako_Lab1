@@ -1,18 +1,22 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Register from './auth/routes/Register';
-import Login from './auth/routes/Login';
-import ForgotPassword from './auth/routes/ForgotPassword';
-import Logout from './auth/components/Logout';
-import Dashboard from './home/routes/Dashboard';
-import Home from './home/Home';
-import Library from './home/routes/Library';
-import Quizzes from './home/routes/Quizzes';
-import Flashcards from './home/routes/Flashcards';
-import Profile from './home/routes/Profile';
-import EditorLayout from './note/layouts/EditorLayout';
-import NoteEditorPage from './note/routes/NoteEditorPage';
-import ProtectedRoute from './auth/components/ProtectedRoute';
-import { AuthProvider } from './auth/contexts/AuthContext';
+import Register from './auth/register/Register';
+import Login from './auth/login/Login';
+import ForgotPassword from './auth/forgot-password/ForgotPassword';
+import Logout from './auth/shared/components/Logout';
+import Dashboard from './home/dashboard/Dashboard';
+import HomeLayout from './home/shared/layouts/HomeLayout';
+import AuthLayout from './auth/shared/layouts/AuthLayout';
+import Library from './home/library/Library';
+import Quizzes from './home/quizzes/Quizzes';
+import Flashcards from './home/flashcards/Flashcards';
+import Profile from './home/profile/Profile';
+import EditorLayout from './notebook/editor/layouts/EditorLayout';
+import NoteEditorPage from './notebook/editor/NoteEditor';
+import ProtectedRoute from './auth/shared/components/ProtectedRoute';
+import { AuthProvider } from './auth/shared/contexts/AuthContext';
+import { NotebookProvider } from './notebook/shared/contexts/NotebookContext';
+import { CategoryProvider } from './notebook/shared/contexts/CategoryContext';
+import { SectionProvider } from './notebook/shared/contexts/SectionContext';
 import { LoadingProvider, ModalProvider } from './common/contexts/ActiveContexts';
 import { NotificationProvider } from './common/contexts/NotificationContext';
 import { NotificationContainer } from './common/components/Notification';
@@ -34,11 +38,13 @@ const AppContent = () => {
       <LoadingOverlay isActive={isLoading} />
       <NotificationContainer />
       <Routes>
-        <Route path="/register" element={<Register/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route element={<AuthLayout />}>
+          <Route path="/register" element={<Register/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+        </Route>
         
-        <Route element={<ProtectedRoute><Home /></ProtectedRoute>}>
+        <Route element={<ProtectedRoute><HomeLayout /></ProtectedRoute>}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/library" element={<Library />} />
           <Route path="/quizzes" element={<Quizzes />} />
@@ -60,13 +66,19 @@ const AppContent = () => {
 function App() {
   return (
     <NotificationProvider>
-      <AuthProvider>
-        <LoadingProvider>
-          <ModalProvider>
-            <AppContent />
-          </ModalProvider>
-        </LoadingProvider>
-      </AuthProvider>
+      <LoadingProvider>
+        <AuthProvider>
+          <NotebookProvider>
+            <CategoryProvider>
+              <SectionProvider>
+                <ModalProvider>
+                  <AppContent />
+                </ModalProvider>
+              </SectionProvider>
+            </CategoryProvider>
+          </NotebookProvider>
+        </AuthProvider>
+      </LoadingProvider>
     </NotificationProvider>
   )
 }
