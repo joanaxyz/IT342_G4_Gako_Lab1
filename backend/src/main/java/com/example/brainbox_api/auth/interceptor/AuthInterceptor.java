@@ -36,6 +36,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return false;
         }
 
+        // checks if access token is valid, else returns a 401 error response.
         String token = authHeader.substring(7);
         if (!jwtService.validateToken(token)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
