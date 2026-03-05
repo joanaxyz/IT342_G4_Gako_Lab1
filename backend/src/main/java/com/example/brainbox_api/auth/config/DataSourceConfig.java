@@ -36,6 +36,17 @@ public class DataSourceConfig {
         config.setPassword(password);
         config.setDriverClassName(driverClassName);
         
+        // Add timeouts and properties to handle network issues
+        config.setConnectionTimeout(30000); // 30 seconds
+        config.setIdleTimeout(600000);      // 10 minutes
+        config.setMaxLifetime(1800000);     // 30 minutes
+        
+        // Driver properties
+        config.addDataSourceProperty("connectTimeout", "30"); // 30 seconds
+        config.addDataSourceProperty("socketTimeout", "30");  // 30 seconds
+        config.addDataSourceProperty("ssl", "true");
+        config.addDataSourceProperty("sslmode", "require");
+        
         return new HikariDataSource(config);
     }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../shared/hooks/useAuth';
-import { useNotification } from '../../../common/hooks/useNotification';
+import { useNotification } from '../../../common/hooks/hooks';
 
 export const useLogin = (setHeader) => {
     const [formData, setFormData] = useState({

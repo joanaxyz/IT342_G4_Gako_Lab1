@@ -1,40 +1,53 @@
-import { SkipBack, Play, SkipForward, Volume2 } from 'lucide-react';
+import { SkipBack, Play, Pause, SkipForward } from 'lucide-react';
 
-const PlaybackBar = () => {
+const PlaybackBar = ({ 
+  currentSection, 
+  totalSections, 
+  currentSectionIndex, 
+  isPlaying, 
+  onTogglePlay, 
+  onNext, 
+  onPrev
+}) => {
   return (
     <div className="playback-bar">
       <div className="playback-bar-inner">
-        <div className="playback-controls">
-          <button type="button" className="playback-btn" aria-label="Previous section" title="Previous section">
-            <SkipBack size={22} strokeWidth={2} />
-          </button>
-          <button type="button" className="playback-btn playback-btn-play" aria-label="Play" title="Play">
-            <Play size={26} strokeWidth={2} fill="currentColor" />
-          </button>
-          <button type="button" className="playback-btn" aria-label="Next section" title="Next section">
-            <SkipForward size={22} strokeWidth={2} />
-          </button>
-        </div>
-
-        <div className="playback-progress-wrap">
-          <span className="playback-time playback-time-current">0:00</span>
-          <div className="playback-progress">
-            <div className="playback-progress-track" />
-            <div className="playback-progress-fill" style={{ width: '0%' }} />
+        <div className="playback-info">
+          <div className="playback-section-info">
+            <div className="playback-section-title">{currentSection?.title || 'Section Title'}</div>
+            <div className="playback-section-count">Section {currentSectionIndex + 1} of {totalSections}</div>
           </div>
-          <span className="playback-time playback-time-total">0:00</span>
         </div>
 
-        <div className="playback-right">
-          <select className="playback-speed" defaultValue="1" aria-label="Playback speed">
-            <option value="0.75">0.75×</option>
-            <option value="1">1×</option>
-            <option value="1.25">1.25×</option>
-            <option value="1.5">1.5×</option>
-          </select>
-          <button type="button" className="playback-btn playback-btn-volume" aria-label="Volume" title="Volume">
-            <Volume2 size={20} strokeWidth={1.75} />
+        <div className="playback-controls">
+          <button 
+            type="button" 
+            className="playback-btn" 
+            onClick={onPrev}
+            aria-label="Previous section"
+          >
+            <SkipBack size={20} fill="currentColor" />
           </button>
+          <button 
+            type="button" 
+            className="playback-btn playback-btn-play-large" 
+            onClick={onTogglePlay}
+            aria-label={isPlaying ? "Pause" : "Play"}
+          >
+            {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" className="play-icon-offset" />}
+          </button>
+          <button 
+            type="button" 
+            className="playback-btn" 
+            onClick={onNext}
+            aria-label="Next section"
+          >
+            <SkipForward size={20} fill="currentColor" />
+          </button>
+        </div>
+
+        <div className="playback-extras">
+          {/* Spacing to match global player layout */}
         </div>
       </div>
     </div>

@@ -1,33 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from '../components/Navbar.jsx';
 import Sidebar from '../components/Sidebar';
-import { useNotebook } from '../../../notebook/shared/hooks/useNotebook';
+import PlayerBar from '../components/PlayerBar';
+import { useNotebook } from '../../../notebook/shared/hooks/hooks';
 import '../styles/home.css';
 
-const Home = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+const HomeLayout = () => {
     const { fetchNotebooks } = useNotebook();
 
     useEffect(() => {
         fetchNotebooks();
     }, [fetchNotebooks]);
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
-
     return (
         <div className="home-layout">
-            <Navbar onToggleSidebar={toggleSidebar} />
+            <Sidebar />
             <div className="home-main">
-                <Sidebar isOpen={isSidebarOpen} />
-                <main className={`home-content ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+                <div className="home-content page-enter">
                     <Outlet />
-                </main>
+                </div>
             </div>
+            <PlayerBar />
         </div>
     );
 };
 
-export default Home;
+export default HomeLayout;

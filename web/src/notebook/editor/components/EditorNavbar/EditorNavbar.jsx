@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, BookOpen } from 'lucide-react';
+import { ArrowLeft, BookOpen, Eye } from 'lucide-react';
 import EditableTitle from '../../../../common/components/EditableTitle';
 
-const EditorNavbar = ({ notebookTitle, viewMode, onViewModeChange, onTitleChange }) => {
+const EditorNavbar = ({ notebookTitle, onTitleChange, onReviewMode }) => {
   return (
     <header className="editor-navbar">
       <div className="editor-navbar-left">
@@ -23,32 +23,16 @@ const EditorNavbar = ({ notebookTitle, viewMode, onViewModeChange, onTitleChange
       </div>
 
       <div className="editor-navbar-center">
-        <div className="editor-view-toggle" role="tablist" aria-label="View mode">
-          <button
-            type="button"
-            role="tab"
-            aria-selected={viewMode === 'section'}
-            className={`editor-view-toggle-btn ${viewMode === 'section' ? 'active' : ''}`}
-            onClick={() => onViewModeChange('section')}
-          >
-            Section view
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={viewMode === 'long'}
-            className={`editor-view-toggle-btn ${viewMode === 'long' ? 'active' : ''}`}
-            onClick={() => onViewModeChange('long')}
-          >
-            Long document
-          </button>
-        </div>
+        {/* View toggle removed */}
       </div>
 
       <div className="editor-navbar-right">
-        <span className="editor-navbar-hint">
-          {viewMode === 'section' ? 'One section at a time' : 'Full document scroll'}
-        </span>
+        <div className="editor-navbar-actions">
+          <button className="editor-navbar-action-btn" onClick={onReviewMode}>
+            <Eye size={18} strokeWidth={1.75} />
+            <span>Review Mode</span>
+          </button>
+        </div>
       </div>
     </header>
   );

@@ -1,6 +1,6 @@
-import { Sparkles, X } from 'lucide-react';
+import { Sparkles, X, HelpCircle, Layers } from 'lucide-react';
 
-const AiSidebar = ({ isOpen, onClose }) => {
+const AiSidebar = ({ isOpen, onClose, onCreateQuiz, onCreateFlashcards }) => {
   if (!isOpen) return null;
 
   return (
@@ -22,13 +22,35 @@ const AiSidebar = ({ isOpen, onClose }) => {
           </button>
         </div>
         <div className="ai-sidebar-content">
-          <p className="ai-sidebar-hint">Ask about the current section or get help with learning.</p>
+          <p className="ai-sidebar-hint">Ask about the notebook or get help with learning.</p>
           <div className="ai-sidebar-actions">
-            <button type="button" className="ai-sidebar-action">Summarize this section</button>
+            <button type="button" className="ai-sidebar-action">Summarize this notebook</button>
             <button type="button" className="ai-sidebar-action">Explain in simpler terms</button>
-            <button type="button" className="ai-sidebar-action">Quiz me on this</button>
             <button type="button" className="ai-sidebar-action">Generate practice questions</button>
           </div>
+
+          <div className="ai-sidebar-divider" />
+
+          <p className="ai-sidebar-hint">Generate study materials from this notebook:</p>
+          <div className="ai-sidebar-actions">
+            <button
+              type="button"
+              className="ai-sidebar-action ai-sidebar-action--generate"
+              onClick={() => { onCreateQuiz?.(); onClose(); }}
+            >
+              <HelpCircle size={15} strokeWidth={1.75} />
+              Create Quiz from this notebook
+            </button>
+            <button
+              type="button"
+              className="ai-sidebar-action ai-sidebar-action--generate"
+              onClick={() => { onCreateFlashcards?.(); onClose(); }}
+            >
+              <Layers size={15} strokeWidth={1.75} />
+              Create Flashcards from this notebook
+            </button>
+          </div>
+
           <div className="ai-sidebar-chat">
             <div className="ai-sidebar-chat-placeholder">
               Or type a question below…

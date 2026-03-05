@@ -15,6 +15,7 @@ import com.example.brainbox_api.auth.dto.request.VerifyCodeRequest;
 import com.example.brainbox_api.auth.dto.response.LoginResponse;
 import com.example.brainbox_api.auth.dto.response.VerifyCodeResponse;
 import com.example.brainbox_api.auth.service.AuthService;
+import com.example.brainbox_api.common.dto.ApiResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -29,14 +30,14 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-    
+
     @Value("${app.frontend-url}")
     private String frontendUrl;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<ApiResponse<Void>> register(@RequestBody RegisterRequest request) {
         authService.register(request);
-        return ResponseEntity.ok("Registration successful. Please check your email for verification.");
+        return ResponseEntity.ok(ApiResponse.success());
     }
 
     @GetMapping("/verify-email")
@@ -48,35 +49,35 @@ public class AuthController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+    public ResponseEntity<ApiResponse<Void>> forgotPassword(@RequestBody ForgotPasswordRequest request) {
         authService.forgotPassword(request.getEmail());
-        return ResponseEntity.ok("Verification code sent to your email.");
+        return ResponseEntity.ok(ApiResponse.success());
     }
 
     @PostMapping("/verify-code")
-    public ResponseEntity<VerifyCodeResponse> verifyCode(@RequestBody VerifyCodeRequest request) {
-        return ResponseEntity.ok(authService.verifyCode(request.getEmail(), request.getCode()));
+    public ResponseEntity<ApiResponse<VerifyCodeResponse>> verifyCode(@RequestBody VerifyCodeRequest request) {
+        return ResponseEntity.ok(ApiResponse.success(authService.verifyCode(request.getEmail(), request.getCode())));
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
+    public ResponseEntity<ApiResponse<Void>> resetPassword(@RequestBody ResetPasswordRequest request) {
         authService.resetPassword(request.getToken(), request.getNewPassword());
-        return ResponseEntity.ok("Password reset successfully.");
+        return ResponseEntity.ok(ApiResponse.success());
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request, HttpServletRequest servletRequest) {
-        return ResponseEntity.ok(authService.login(request, servletRequest));
+    public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody LoginRequest request, HttpServletRequest servletRequest) {
+        return ResponseEntity.ok(ApiResponse.success(authService.login(request, servletRequest)));
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestBody LogoutRequest request) {
+    public ResponseEntity<ApiResponse<Void>> logout(@RequestBody LogoutRequest request) {
         authService.logout(request);
-        return ResponseEntity.ok("Logged out successfully.");
+        return ResponseEntity.ok(ApiResponse.success());
     }
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<LoginResponse> refreshToken(@RequestParam String refreshToken) {
-        return ResponseEntity.ok(authService.refreshToken(refreshToken));
+    public ResponseEntity<ApiResponse<LoginResponse>> refreshToken(@RequestParam String refreshToken) {
+        return ResponseEntity.ok(ApiResponse.success(authService.refreshToken(refreshToken)));
     }
 }

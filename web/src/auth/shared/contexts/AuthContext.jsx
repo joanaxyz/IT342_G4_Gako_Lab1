@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { authAPI, getCookie, getAuthHeaders, setCookie, deleteCookie } from '../../../common/utils/api';
-import { useLoading } from '../../../common/hooks/useActive';
+import { useLoading } from '../../../common/hooks/hooks';
 
 export const AuthContext = createContext(null);
 

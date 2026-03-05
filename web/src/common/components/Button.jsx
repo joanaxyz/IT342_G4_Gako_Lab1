@@ -6,9 +6,11 @@ const Button = ({
   type = 'button', 
   variant = 'primary', 
   fullWidth = false,
-  style = {} 
+  disabled = false,
+  style = {},
+  className: extraClass = ''
 }) => {
-  const className = `btn btn-${variant} ${fullWidth ? 'btn-full' : ''}`;
+  const className = `btn btn-${variant} ${fullWidth ? 'btn-full' : ''} ${extraClass}`.trim();
   
   return (
     <button 
@@ -16,6 +18,7 @@ const Button = ({
       onClick={onClick} 
       className={className}
       style={style}
+      disabled={disabled}
     >
       {children}
     </button>

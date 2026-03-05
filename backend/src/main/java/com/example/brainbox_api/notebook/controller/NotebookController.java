@@ -1,8 +1,6 @@
 package com.example.brainbox_api.notebook.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.example.brainbox_api.common.dto.ApiResponse;
 import com.example.brainbox_api.notebook.service.NotebookService;
 
 import lombok.RequiredArgsConstructor;
@@ -13,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.brainbox_api.auth.annotation.RequireAuth;
 import com.example.brainbox_api.notebook.dto.request.NotebookRequest;
-import com.example.brainbox_api.notebook.dto.response.NotebookResponse;
+import com.example.brainbox_api.notebook.dto.response.NotebookFullResponse;
+import com.example.brainbox_api.notebook.dto.response.NotebookOverviewResponse;
 
 @RestController
 @RequestMapping("/api/notebooks")
@@ -22,31 +21,32 @@ public class NotebookController {
     private final NotebookService notebookService;
 
     @RequireAuth
-    @PostMapping("/create")
-    public ResponseEntity<NotebookResponse> createNotebook(@RequestBody NotebookRequest notebookRequest, @RequestAttribute Long userId) {
-        return ResponseEntity.ok(notebookService.createNotebook(notebookRequest, userId));
+    @PostMapping
+    public ResponseEntity<ApiResponse<NotebookFullResponse>> createNotebook(@RequestBody NotebookRequest notebookRequest, @RequestAttribute Long userId) {
+        return ResponseEntity.ok(ApiResponse.success(notebookService.createNotebook(notebookRequest, userId)));
     }
-    
+    @RequireAuth
     @GetMapping()
-    public ResponseEntity<List<NotebookResponse>> getNotebooks() {
-        return ResponseEntity.ok(notebookService.getAllNotebooks());
+    public ResponseEntity<ApiResponse<List<NotebookOverviewResponse>>> getNotebookOverview(@RequestAttribute Long userId) {
+        return ResponseEntity.ok(ApiResponse.success(notebookService.getNotebookOverviewsByUser(userId)));
     }
 
+    @RequireAuth
     @GetMapping("/{id}")
-    public ResponseEntity<NotebookResponse> getNotebook(@PathVariable Long id) {
-        return ResponseEntity.ok(notebookService.getNotebookResponseById(id));
+    public ResponseEntity<ApiResponse<NotebookFullResponse>> getNotebook(@PathVariable Long id){
+        return ResponseEntity.ok(ApiResponse.success(notebookService.getFullNotebookResponseById(id)));
     }
 
     @RequireAuth
-    @PutMapping("/update/{id}")
-    public ResponseEntity<NotebookResponse> updateNotebook(@PathVariable Long id, @RequestBody NotebookRequest notebookRequest) {
-        return ResponseEntity.ok(notebookService.updateNotebook(id, notebookRequest));
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<NotebookFullResponse>> updateNotebook(@PathVariable Long id, @RequestBody NotebookRequest notebookRequest) {
+        return ResponseEntity.ok(ApiResponse.success(notebookService.updateNotebook(id, notebookRequest)));
     }
 
     @RequireAuth
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteNotebook(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteNotebook(@PathVariable Long id) {
         notebookService.deleteNotebook(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success());
     }
 }

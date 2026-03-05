@@ -6,7 +6,7 @@ import {
     AlertTriangle, 
     Info 
 } from 'lucide-react';
-import { useNotification } from '../hooks/useNotification';
+import { useNotification } from '../hooks/hooks';
 
 const getIcon = (type) => {
     switch (type) {

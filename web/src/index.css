@@ -1,41 +1,33 @@
 @import './common/styles/tokens.css';
 @import './common/styles/components.css';
 
-:root {
-  font-family: var(--font-sans);
-  line-height: 1.5;
-  font-weight: 400;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  color: var(--text-primary);
-  background-color: var(--background-color);
-
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  min-width: 320px;
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.5;
   min-height: 100vh;
-  color: var(--text-primary);
-  background-color: var(--background-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
+
+button, input, select, textarea { font: inherit; }
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--cream-3); border-radius: 99px; }
 
 a {
-  color: var(--primary-color);
+  color: inherit;
   text-decoration: none;
-  transition: color 0.2s;
 }
 
-a:hover {
-  color: var(--primary-hover);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  margin: 0;
-}
+h1, h2, h3, h4, h5, h6 { margin: 0; }

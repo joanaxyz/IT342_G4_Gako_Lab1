@@ -1,9 +1,8 @@
-import React from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
 import { useLogin } from './hooks/useLogin';
 import FieldInput from '../../common/components/FieldInput';
 import Button from '../../common/components/Button';
-import GoogleButton from '../../common/components/GoogleButton';
+import GoogleButton from '../shared/components/GoogleButton';
 import './styles/Login.css';
 
 const Login = () => {

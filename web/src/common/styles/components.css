@@ -55,6 +55,24 @@
   width: 100%;
 }
 
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.btn-ghost:hover {
+  background: var(--background-subtle);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .auth-divider {
   display: flex;
   align-items: center;

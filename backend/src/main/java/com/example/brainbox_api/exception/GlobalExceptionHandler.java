@@ -5,43 +5,40 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.example.brainbox_api.common.dto.ApiResponse;
+
 import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, String>> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return createResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    public ResponseEntity<ApiResponse<Void>> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.error("BAD_REQUEST", ex.getMessage()));
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<Map<String, String>> handleNoSuchElementException(NoSuchElementException ex) {
-        return createResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    public ResponseEntity<ApiResponse<Void>> handleNoSuchElementException(NoSuchElementException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.error("NOT_FOUND", ex.getMessage()));
     }
 
     @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<Map<String, String>> handleIllegalStateException(IllegalStateException ex) {
-        return createResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    public ResponseEntity<ApiResponse<Void>> handleIllegalStateException(IllegalStateException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.error("BAD_REQUEST", ex.getMessage()));
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
-        return createResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    public ResponseEntity<ApiResponse<Void>> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiResponse.error("INTERNAL_SERVER_ERROR", ex.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
-        return createResponse(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred");
-    }
-
-    private ResponseEntity<Map<String, String>> createResponse(HttpStatus status, String message) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", status.getReasonPhrase());
-        response.put("message", message);
-        response.put("status", String.valueOf(status.value()));
-        return new ResponseEntity<>(response, status);
+    public ResponseEntity<ApiResponse<Void>> handleGenericException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiResponse.error("INTERNAL_SERVER_ERROR", "An unexpected error occurred"));
     }
 }

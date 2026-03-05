@@ -1,6 +1,6 @@
 import { createContext, useState, useCallback, useMemo } from 'react';
 import { categoryAPI } from '../../../common/utils/api';
-import { useLoading } from '../../../common/hooks/useActive';
+import { useLoading } from '../../../common/hooks/hooks';
 
 export const CategoryContext = createContext(null);
 

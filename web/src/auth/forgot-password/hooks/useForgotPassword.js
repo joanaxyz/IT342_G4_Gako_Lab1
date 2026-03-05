@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../shared/hooks/useAuth';
-import { useNotification } from '../../../common/hooks/useNotification';
+import { useNotification } from '../../../common/hooks/hooks';
 
 export const STEPS = {
     EMAIL: 'EMAIL',

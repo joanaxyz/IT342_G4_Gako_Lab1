@@ -20,6 +20,10 @@ export const formatUpdatedAt = (dateString) => {
         return `${diffInHours}h ago`;
     }
 
+    if (diffInDays < 7) {
+        return `${diffInDays}d ago`;
+    }
+
     // Text format: e.g., "October 24, 2023"
     return date.toLocaleDateString('en-US', {
         year: 'numeric',

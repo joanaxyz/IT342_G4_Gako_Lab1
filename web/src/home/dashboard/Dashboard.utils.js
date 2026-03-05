@@ -4,3 +4,8 @@ export const getGreeting = () => {
   if (hour < 18) return 'Good afternoon';
   return 'Good evening';
 };
+
+const NOTEBOOK_EMOJIS = ['📘', '📙', '📗', '📕', '📓'];
+
+export const getEmoji = (index) => NOTEBOOK_EMOJIS[index % NOTEBOOK_EMOJIS.length];
+export const getIconVariant = (index) => ['a', 'b', 'c'][index % 3];

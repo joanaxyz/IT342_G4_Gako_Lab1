@@ -1,6 +1,6 @@
 import { createContext, useState, useCallback, useMemo, useEffect } from 'react';
 import { notebookAPI } from '../../../common/utils/api';
-import { useLoading } from '../../../common/hooks/useActive';
+import { useLoading } from '../../../common/hooks/hooks';
 
 export const NotebookContext = createContext(null);
 
@@ -42,7 +42,7 @@ export const NotebookProvider = ({ children }) => {
         return response;
     }, [withLoading]);
 
-    const updateNotebook = useCallback(async (id, notebook, showSpinner = true) => {
+    const updateNotebook = useCallback(async (id, notebook, showSpinner = false) => {
         const response = await withLoading(() => notebookAPI.updateNotebook(id, notebook), showSpinner);
         if (response.success) {
             setNotebooks(prev => prev.map(n => n.id === id ? response.data : n));

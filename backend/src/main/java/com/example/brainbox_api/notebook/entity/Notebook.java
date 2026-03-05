@@ -9,9 +9,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,9 +27,15 @@ public class Notebook {
 
     private String title;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
     private Instant createdAt;
     
     private Instant updatedAt;
+
+    private Instant lastReviewedAt;
 
     @ManyToOne
     @JoinColumn(name="category_id", nullable=true)

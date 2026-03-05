@@ -1,65 +1,53 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { useNotebook } from '../shared/hooks/useNotebook';
-import { useSection } from '../shared/hooks/useSection';
-import { useSectionActions } from '../shared/hooks/useSectionActions';
+import { useNotebook } from '../shared/hooks/hooks';
 import { useEditorResize } from './hooks/useEditorResize';
 import { useNoteEditorData } from './hooks/useNoteEditorData';
 import EditorNavbar from './components/EditorNavbar/EditorNavbar';
-import FormatToolbar from './components/FormatToolbar/FormatToolbar';
-import TocSidebar from './components/TocSidebar/TocSidebar';
-import SectionView from './components/SectionView/SectionView';
-import LongDocumentView from './components/LongDocumentView/LongDocumentView';
+import FormatToolbar, { EDITOR_FONTS } from './components/FormatToolbar/FormatToolbar';
+import NoteEditorContent from './components/NoteEditorContent/NoteEditorContent';
+import OutlineNav from './components/OutlineNav/OutlineNav';
 import AiSidebar from './components/AiSidebar/AiSidebar';
 import AiFab from './components/AiFab/AiFab';
-import { useNotification } from '../../common/hooks/useNotification';
+import ReviewMode from './components/ReviewMode/ReviewMode';
+import CreateQuizModal from '../../home/quizzes/components/CreateQuizModal';
+import CreateDeckModal from '../../home/flashcards/components/CreateDeckModal';
+import { useAudioPlayer } from '../../common/hooks/hooks';
 import './editor.css';
 
 const NoteEditor = () => {
   const { id } = useParams();
   const { state: locationState } = useLocation();
-  const [viewMode, setViewMode] = useState('section');
-  const { addNotification } = useNotification();
   
   const editorBodyRef = useRef(null);
+  const editorRef = useRef(null);
   const { editorMaxWidth, handleMouseDown } = useEditorResize(editorBodyRef);
   
-  const { currentNotebook, setCurrentNotebook, notebooks, fetchNotebook, updateNotebook } = useNotebook();
-  const {
-    sections,
-    setSections,
-    currentSection,
-    setCurrentSection,
-    fetchSectionsByNotebook
-  } = useSection();
+  const { currentNotebook, notebooks, fetchNotebook, updateNotebook } = useNotebook();
 
-  const { setActiveSectionId } = useNoteEditorData({
+  useNoteEditorData({
     id,
-    notebooks,
     currentNotebook,
-    setCurrentNotebook,
     fetchNotebook,
-    sections,
-    currentSection,
-    setCurrentSection,
-    fetchSectionsByNotebook,
-    addNotification
   });
 
-  const { addNewSection, updateSection, reorderSection, reorderSectionBefore, reorderSectionInto, persistSectionOrder } = useSectionActions(currentNotebook);
-
-  const activeSectionId = currentSection?.id;
+  const [outline, setOutline] = useState([]);
 
   const [aiSidebarOpen, setAiSidebarOpen] = useState(false);
   const [activeEditor, setActiveEditor] = useState(null);
+  const [isReviewModeOpen, setIsReviewModeOpen] = useState(locationState?.mode === 'review');
+  const [showCreateQuiz, setShowCreateQuiz] = useState(false);
+  const [showCreateFlashcards, setShowCreateFlashcards] = useState(false);
+  const [editorFont, setEditorFont] = useState('default');
+  const [showLines, setShowLines] = useState(false);
+
+  const { togglePlay } = useAudioPlayer();
+
+  const fontFamily = EDITOR_FONTS.find((f) => f.value === editorFont)?.family ?? 'inherit';
 
   const notebookTitle = id === 'new'
     ? (locationState?.title || 'New notebook')
     : (currentNotebook?.title || 'Loading...');
-
-  const handleAddTopLevel = useCallback(() => addNewSection(null, null), [addNewSection]);
-  const handleAddChild = useCallback((parentId) => addNewSection(parentId, null), [addNewSection]);
-  const handleAddAfter = useCallback((afterId) => addNewSection(null, afterId), [addNewSection]);
 
   const handleUpdateNotebookTitle = useCallback((newTitle) => {
     if (currentNotebook?.id) {
@@ -67,28 +55,38 @@ const NoteEditor = () => {
     }
   }, [currentNotebook, updateNotebook]);
 
+  const handleUpdateNotebookContent = useCallback((newContent) => {
+    if (currentNotebook?.id) {
+      updateNotebook(currentNotebook.id, { content: newContent });
+    }
+  }, [currentNotebook, updateNotebook]);
+
+  const handleTogglePlay = useCallback(() => {
+    togglePlay(currentNotebook);
+  }, [togglePlay, currentNotebook]);
+
+  const handleSelectHeading = useCallback((pos) => {
+    editorRef.current?.scrollToHeading(pos);
+  }, []);
+
   return (
     <>
       <EditorNavbar
         notebookTitle={notebookTitle}
-        viewMode={viewMode}
-        onViewModeChange={setViewMode}
         onTitleChange={handleUpdateNotebookTitle}
+        onReviewMode={() => setIsReviewModeOpen(true)}
       />
-      <FormatToolbar editor={activeEditor} />
+      <FormatToolbar
+        editor={activeEditor}
+        font={editorFont}
+        onFontChange={setEditorFont}
+        showLines={showLines}
+        onLinesToggle={() => setShowLines((v) => !v)}
+      />
       <div className="editor-body" ref={editorBodyRef}>
-        <TocSidebar
-          sections={sections}
-          activeSectionId={activeSectionId}
-          onSelectSection={setActiveSectionId}
-          onAddTopLevel={handleAddTopLevel}
-          onAddChild={handleAddChild}
-          onAddAfter={handleAddAfter}
-          onUpdateSection={updateSection}
-          onReorderSection={reorderSection}
-          onReorderSectionBefore={reorderSectionBefore}
-          onReorderSectionInto={reorderSectionInto}
-          onReorderDone={persistSectionOrder}
+        <OutlineNav 
+          outline={outline} 
+          onSelect={handleSelectHeading} 
         />
         <main className="editor-main">
           <div 
@@ -103,19 +101,15 @@ const NoteEditor = () => {
               className="editor-resize-handle editor-resize-handle-right" 
               onMouseDown={handleMouseDown}
             />
-            {viewMode === 'section' && (
-              <SectionView 
-                section={currentSection} 
-                onUpdateSection={updateSection} 
+            {currentNotebook && (
+              <NoteEditorContent 
+                ref={editorRef}
+                content={currentNotebook.content || ''} 
+                onUpdateContent={handleUpdateNotebookContent} 
                 onFocus={setActiveEditor}
-              />
-            )}
-            {viewMode === 'long' && (
-              <LongDocumentView 
-                sections={sections} 
-                activeSectionId={activeSectionId} 
-                onUpdateSection={updateSection}
-                onFocus={setActiveEditor}
+                fontFamily={fontFamily}
+                showLines={showLines}
+                onOutlineChange={setOutline}
               />
             )}
           </div>
@@ -123,7 +117,37 @@ const NoteEditor = () => {
       </div>
 
       <AiFab onClick={() => setAiSidebarOpen((o) => !o)} isActive={aiSidebarOpen} />
-      <AiSidebar isOpen={aiSidebarOpen} onClose={() => setAiSidebarOpen(false)} />
+      <AiSidebar
+        isOpen={aiSidebarOpen}
+        onClose={() => setAiSidebarOpen(false)}
+        onCreateQuiz={() => setShowCreateQuiz(true)}
+        onCreateFlashcards={() => setShowCreateFlashcards(true)}
+      />
+      
+      <ReviewMode 
+        isOpen={isReviewModeOpen}
+        onClose={() => setIsReviewModeOpen(false)}
+        notebookTitle={notebookTitle}
+        onTogglePlay={handleTogglePlay}
+        content={currentNotebook?.content || ''}
+        outline={outline}
+      />
+
+      <CreateQuizModal
+        isOpen={showCreateQuiz}
+        onClose={() => setShowCreateQuiz(false)}
+        onCreate={() => {}}
+        notebooks={notebooks}
+        preselectedNotebookId={currentNotebook?.id ?? null}
+      />
+
+      <CreateDeckModal
+        isOpen={showCreateFlashcards}
+        onClose={() => setShowCreateFlashcards(false)}
+        onCreate={() => {}}
+        notebooks={notebooks}
+        preselectedNotebookId={currentNotebook?.id ?? null}
+      />
     </>
   );
 };

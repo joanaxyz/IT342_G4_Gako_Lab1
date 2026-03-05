@@ -10,18 +10,19 @@ import Library from './home/library/Library';
 import Quizzes from './home/quizzes/Quizzes';
 import Flashcards from './home/flashcards/Flashcards';
 import Profile from './home/profile/Profile';
+import Playlists from './home/playlists/Playlists';
 import EditorLayout from './notebook/editor/layouts/EditorLayout';
 import NoteEditorPage from './notebook/editor/NoteEditor';
 import ProtectedRoute from './auth/shared/components/ProtectedRoute';
 import { AuthProvider } from './auth/shared/contexts/AuthContext';
 import { NotebookProvider } from './notebook/shared/contexts/NotebookContext';
 import { CategoryProvider } from './notebook/shared/contexts/CategoryContext';
-import { SectionProvider } from './notebook/shared/contexts/SectionContext';
-import { LoadingProvider, ModalProvider } from './common/contexts/ActiveContexts';
+import { AudioPlayerProvider } from './common/contexts/AudioPlayerContext';
+import { LoadingProvider } from './common/contexts/ActiveContexts';
 import { NotificationProvider } from './common/contexts/NotificationContext';
 import { NotificationContainer } from './common/components/Notification';
 import LoadingOverlay from './common/components/LoadingOverlay';
-import { useLoading } from './common/hooks/useActive';
+import { useLoading } from './common/hooks/hooks';
 
 const Placeholder = ({ title }) => (
   <div style={{ padding: '20px' }}>
@@ -50,6 +51,7 @@ const AppContent = () => {
           <Route path="/quizzes" element={<Quizzes />} />
           <Route path="/flashcards" element={<Flashcards />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/playlists" element={<Playlists />} />
         </Route>
 
         <Route element={<ProtectedRoute><EditorLayout /></ProtectedRoute>}>
@@ -70,11 +72,9 @@ function App() {
         <AuthProvider>
           <NotebookProvider>
             <CategoryProvider>
-              <SectionProvider>
-                <ModalProvider>
-                  <AppContent />
-                </ModalProvider>
-              </SectionProvider>
+              <AudioPlayerProvider>
+                <AppContent />
+              </AudioPlayerProvider>
             </CategoryProvider>
           </NotebookProvider>
         </AuthProvider>

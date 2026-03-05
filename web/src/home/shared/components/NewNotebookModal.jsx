@@ -2,8 +2,8 @@ import Modal from "../../../common/components/Modal";
 import FieldInput from '../../../common/components/FieldInput';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { useNotebook } from "../../../notebook/shared/hooks/useNotebook";
-import { useNotification } from "../../../common/hooks/useNotification";
+import { useNotebook } from "../../../notebook/shared/hooks/hooks";
+import { useNotification } from "../../../common/hooks/hooks";
 const NewNoteBookModal = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
     const [notebookTitle, setNotebookTitle] = useState('');

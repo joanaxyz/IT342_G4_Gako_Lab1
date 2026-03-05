@@ -7,5 +7,6 @@ import lombok.Setter;
 @Setter
 public class NotebookRequest {
     private String title;
+    private String content;
     private Long categoryId;
 }

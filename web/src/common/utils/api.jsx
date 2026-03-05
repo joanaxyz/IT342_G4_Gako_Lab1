@@ -37,6 +37,27 @@ const processQueue = (error, token = null) => {
     refreshQueue = [];
 };
 
+const parseApiResponse = (httpStatus, data) => {
+    if (data && typeof data === 'object' && 'success' in data) {
+        return {
+            success: data.success,
+            status: httpStatus,
+            data: data.data ?? null,
+            error: data.error ?? null,
+            timestamp: data.timestamp ?? null,
+            message: data.error?.message ?? null
+        };
+    }
+    return {
+        success: httpStatus >= 200 && httpStatus < 300,
+        status: httpStatus,
+        data: typeof data === 'object' ? data : null,
+        error: null,
+        timestamp: null,
+        message: typeof data === 'string' ? data : (data?.message || null)
+    };
+};
+
 const apiCall = async (endpoint, method = 'GET', body = null, headers = {}, isRefreshAttempt = false) => {
     const baseUrl = import.meta.env.VITE_BRAINBOX_API_URL || 'http://localhost:8080/api';
     const url = `${baseUrl}${endpoint}`;
@@ -59,10 +80,9 @@ const apiCall = async (endpoint, method = 'GET', body = null, headers = {}, isRe
     try {
         const response = await fetch(url, options);
 
-        // Handle 401 Unauthorized - Token expired
         if (response.status === 401 && !isRefreshAttempt) {
             const refreshToken = getCookie('refreshToken');
-            
+
             if (refreshToken) {
                 if (isRefreshing) {
                     return new Promise((resolve, reject) => {
@@ -72,7 +92,7 @@ const apiCall = async (endpoint, method = 'GET', body = null, headers = {}, isRe
                                 resolve(apiCall(endpoint, method, body, headers, true));
                             },
                             reject: (err) => {
-                                resolve({ success: false, status: 401, message: 'Session expired' });
+                                resolve({ success: false, status: 401, data: null, error: null, timestamp: null, message: 'Session expired' });
                             }
                         });
                     });
@@ -82,18 +102,17 @@ const apiCall = async (endpoint, method = 'GET', body = null, headers = {}, isRe
                 try {
                     const refreshUrl = `${baseUrl}/auth/refresh-token?refreshToken=${refreshToken}`;
                     const refreshRes = await fetch(refreshUrl, { method: 'POST' });
-                    
+
                     if (refreshRes.ok) {
-                        const refreshData = await refreshRes.json();
-                        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = refreshData;
-                        
+                        const refreshBody = await refreshRes.json();
+                        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = refreshBody.data;
+
                         setCookie('accessToken', newAccessToken, 1);
                         setCookie('refreshToken', newRefreshToken, 7);
-                        
+
                         isRefreshing = false;
                         processQueue(null, newAccessToken);
-                        
-                        // Retry the original request
+
                         options.headers['Authorization'] = `Bearer ${newAccessToken}`;
                         return apiCall(endpoint, method, body, headers, true);
                     } else {
@@ -101,12 +120,12 @@ const apiCall = async (endpoint, method = 'GET', body = null, headers = {}, isRe
                         processQueue(new Error('Refresh failed'));
                         deleteCookie('accessToken');
                         deleteCookie('refreshToken');
-                        return { success: false, status: 401, message: 'Session expired' };
+                        return { success: false, status: 401, data: null, error: null, timestamp: null, message: 'Session expired' };
                     }
                 } catch (refreshError) {
                     isRefreshing = false;
                     processQueue(refreshError);
-                    return { success: false, status: 401, message: 'Session expired' };
+                    return { success: false, status: 401, data: null, error: null, timestamp: null, message: 'Session expired' };
                 }
             }
         }
@@ -120,27 +139,15 @@ const apiCall = async (endpoint, method = 'GET', body = null, headers = {}, isRe
             data = await response.text();
         }
 
-        if (response.ok) {
-            return {
-                success: true,
-                status: response.status,
-                data: typeof data === 'object' ? data : null,
-                message: typeof data === 'string' ? data : (data?.message || null)
-            };
-        } else {
-            return {
-                success: false,
-                status: response.status,
-                data: null,
-                message: typeof data === 'string' ? data : (data?.message || 'Request failed')
-            };
-        }
+        return parseApiResponse(response.status, data);
     } catch (error) {
         console.error(`API call to ${endpoint} failed:`, error);
         return {
             success: false,
             status: 500,
             data: null,
+            error: null,
+            timestamp: null,
             message: error.message || 'Network error'
         };
     }
@@ -175,11 +182,13 @@ export const notebookAPI = {
     getNotebook: (id) =>
         apiCall(`/notebooks/${id}`, 'GET', null, getAuthHeaders()),
     createNotebook: (notebook) =>
-        apiCall('/notebooks/create', 'POST', notebook, getAuthHeaders()),
+        apiCall('/notebooks', 'POST', notebook, getAuthHeaders()),
     updateNotebook: (id, notebook) =>
-        apiCall(`/notebooks/update/${id}`, 'PUT', notebook, getAuthHeaders()),
+        apiCall(`/notebooks/${id}`, 'PUT', notebook, getAuthHeaders()),
     deleteNotebook: (id) =>
-        apiCall(`/notebooks/delete/${id}`, 'DELETE', null, getAuthHeaders()),
+        apiCall(`/notebooks/${id}`, 'DELETE', null, getAuthHeaders()),
+    updateReview: (id) =>
+        apiCall(`/notebooks/update-review/${id}`, 'PATCH', null, getAuthHeaders()),
 };
 
 export const categoryAPI = {
@@ -188,26 +197,9 @@ export const categoryAPI = {
     getCategory: (id) =>
         apiCall(`/categories/${id}`, 'GET', null, getAuthHeaders()),
     createCategory: (name) =>
-        apiCall('/categories/create', 'POST', { name }, getAuthHeaders()),
+        apiCall('/categories', 'POST', { name }, getAuthHeaders()),
     deleteCategory: (id) =>
-        apiCall(`/categories/delete/${id}`, 'DELETE', null, getAuthHeaders()),
-};
-
-export const sectionAPI = {
-    getSectionsByNotebook: (notebookId) =>
-        apiCall(`/sections/notebook/${notebookId}`, 'GET', null, getAuthHeaders()),
-    getSection: (id) =>
-        apiCall(`/sections/${id}`, 'GET', null, getAuthHeaders()),
-    createSection: (section) =>
-        apiCall('/sections/create', 'POST', section, getAuthHeaders()),
-    updateSection: (id, section) =>
-        apiCall(`/sections/update/${id}`, 'PUT', section, getAuthHeaders()),
-    deleteSection: (id) =>
-        apiCall(`/sections/delete/${id}`, 'DELETE', null, getAuthHeaders()),
-    reorderSections: (draggedId, targetId) =>
-        apiCall('/sections/reorder', 'POST', { draggedId, targetId }, getAuthHeaders()),
-    bulkUpdateSectionOrder: (requests) =>
-        apiCall('/sections/bulk-reorder', 'POST', requests, getAuthHeaders()),
+        apiCall(`/categories/${id}`, 'DELETE', null, getAuthHeaders()),
 };
 
 export default apiCall;

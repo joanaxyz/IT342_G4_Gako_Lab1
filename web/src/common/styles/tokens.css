@@ -1,42 +1,77 @@
 :root {
-  /* BrainBox – blue theme (aligned with mobile / loading spinner) */
-  --primary-color: #3b82f6;
-  --primary-hover: #2563eb;
-  --primary-muted: #dbeafe;
-  --accent-warm: #d97706;
-  --accent-warm-muted: #fef3c7;
-  --secondary-color: #64748b;
-  --background-color: #f8fafc;
-  --background-subtle: #f1f5f9;
-  --surface-color: #ffffff;
-  --surface-raised: #ffffff;
-  --text-primary: #0f172a;
-  --text-secondary: #64748b;
-  --text-muted: #94a3b8;
-  --border-color: #e2e8f0;
-  --border-subtle: #f1f5f9;
-  --error-color: #ef4444;
-  --success-color: #22c55e;
+  /* ── Reference Design Tokens (Cream / Terracotta) ── */
+  --cream:       #F7F5F0;
+  --cream-2:     #F0EDE5;
+  --cream-3:     #E8E3D8;
+  --white:       #FFFFFF;
+  --border:      #E2DDD3;
+  --border-2:    #CEC7BB;
 
-  /* Dimensions & Spacing */
-  --input-height: 48px;
-  --button-height: 48px;
-  --border-radius: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
+  --ink:         #1A1714;
+  --ink-2:       #6B6560;
+  --ink-3:       #A39C94;
+  --ink-4:       #C4BDB4;
 
-  /* Typography */
-  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --accent:      #B85336;
+  --accent-2:    #D4684A;
+  --accent-bg:   #F9EDE9;
+  --accent-dark: #8C3A24;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.08), 0 2px 6px -2px rgb(0 0 0 / 0.04);
-  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
-  --shadow-card-hover: 0 10px 25px -5px rgb(0 0 0 / 0.08), 0 4px 10px -4px rgb(0 0 0 / 0.06);
+  --stone:       #7A6E66;
+  --stone-bg:    #EDE9E4;
+
+  --shadow-xs:   0 1px 2px rgba(26,23,20,0.06);
+  --shadow-sm:   0 2px 8px rgba(26,23,20,0.08);
+  --shadow-md:   0 4px 20px rgba(26,23,20,0.10);
+  --shadow-lg:   0 8px 32px rgba(26,23,20,0.12);
+
+  --r:      8px;
+  --r-lg:   12px;
+  --r-xl:   16px;
+  --sidebar: 240px;
+  --ease:    cubic-bezier(.4,0,.2,1);
+
+  /* ── Mapped legacy names (for auth + shared components) ── */
+  --background-color:   var(--cream);
+  --background-subtle:  var(--cream-2);
+  --surface-color:      var(--white);
+  --surface-raised:     var(--white);
+  --text-primary:       var(--ink);
+  --text-secondary:     var(--ink-2);
+  --text-muted:         var(--ink-3);
+  --border-color:       var(--border);
+  --border-subtle:      var(--cream-3);
+
+  --primary-color:      var(--accent);
+  --primary-hover:      var(--accent-dark);
+  --primary-muted:      var(--accent-bg);
+
+  --secondary-color:    var(--stone);
+  --accent-warm:        var(--accent-2);
+  --accent-warm-muted:  var(--accent-bg);
+
+  --error-color:        #ef4444;
+  --success-color:      #22c55e;
+
+  /* ── Dimensions & Spacing ── */
+  --input-height:   48px;
+  --button-height:  48px;
+  --border-radius:  var(--r);
+  --radius-lg:      var(--r-lg);
+  --radius-xl:      var(--r-xl);
+  --spacing-xs:     4px;
+  --spacing-sm:     8px;
+  --spacing-md:     16px;
+  --spacing-lg:     24px;
+  --spacing-xl:     32px;
+  --spacing-2xl:    48px;
+
+  /* ── Typography ── */
+  --font-sans:  'IBM Plex Sans', system-ui, sans-serif;
+  --font-serif: 'Lora', Georgia, serif;
+  --font-mono:  'IBM Plex Mono', monospace;
+
+  /* ── Shadow aliases ── */
+  --shadow-card:       var(--shadow-sm);
+  --shadow-card-hover: var(--shadow-md);
 }

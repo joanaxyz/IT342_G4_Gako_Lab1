@@ -1,71 +1,81 @@
-import { Plus } from 'lucide-react';
-import { useModal } from '../../common/hooks/useActive';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/shared/hooks/useAuth';
-import { useNotebook } from '../../notebook/shared/hooks/useNotebook';
+import { useNotebook } from '../../notebook/shared/hooks/hooks';
 import NewNoteBookModal from '../shared/components/NewNotebookModal';
-import Notebook from '../shared/components/Notebook';
-import './styles/dashboard.css';
-
 import { getGreeting } from './Dashboard.utils';
+import ReviewCard from './components/ReviewCard';
+import NbCard from './components/NbCard';
+import './styles/dashboard.css';
 
 const Dashboard = () => {
   const { user } = useAuth();
   const name = user?.username || 'there';
-  const { active: showNewNotebookModal, activate, deactivate } = useModal();
-  const { notebooks } = useNotebook();
-  const openNewNotebookModal = () => {
-    activate();
-  };
+  const { notebooks, setCurrentNotebook } = useNotebook();
+  const navigate = useNavigate();
+  const today = new Date();
+  const dayName = today.toLocaleDateString('en-US', { weekday: 'long' });
+  const monthDay = today.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
 
-  const closeNewNotebookModal = () => {
-    deactivate();
-  };
+  const [showNewNotebookModal, setShowNewNotebookModal] = useState(false);
 
+  const sortedNotebooks = [...notebooks].sort(
+    (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+  );
+
+  const recentNotebooks = sortedNotebooks.slice(0, 3);
+  const recentLibraryNotebooks = sortedNotebooks.slice(0, 6);
 
   return (
-    <div className="dashboard-page">
-      <header className="dashboard-welcome">
-        <h1 className="dashboard-greeting">{getGreeting()}, {name}</h1>
-        <p className="dashboard-tagline">What do you want to learn today?</p>
-      </header>
-
-      <section className="dashboard-section">
-        <div className="dashboard-section-header">
-          <h2 className="dashboard-section-title">Continue learning</h2>
+    <div className="page-body">
+      <div className="dash-greeting">
+        <div className="dash-greeting-label">
+          {dayName}, {monthDay} · {getGreeting()}
         </div>
-        <div className="dashboard-continue">
-          {notebooks.slice(0, 2).map(notebook => (
-            <Notebook key={notebook.id} notebook={notebook} />
-          ))}
+        <div className="dash-greeting-name">
+          Ready to learn, <em>{name}?</em>
         </div>
-      </section>
-
-      <section className="dashboard-section">
-        <div className="dashboard-section-header">
-          <h2 className="dashboard-section-title">Your library</h2>
+        <div className="dash-greeting-sub">
+          {notebooks.length > 0
+            ? `You have ${notebooks.length} notebook${notebooks.length !== 1 ? 's' : ''}.`
+            : 'Create a notebook to start learning.'}
         </div>
-        <div className="dashboard-library-grid">
-          <button type="button" className="dashboard-library-card new-notebook" onClick={openNewNotebookModal}>
-            <div className="dashboard-library-card-icon">
-              <Plus size={28} strokeWidth={2} />
-            </div>
-            <span>New notebook</span>
-          </button>
-          {notebooks.map(notebook => (
-            <Notebook key={notebook.id} notebook={notebook} variant="library" />
-          ))}
-        </div>
-      </section>
-
-      <div className="dashboard-stats">
-        <span className="dashboard-stat"><strong>{notebooks.length}</strong> {notebooks.length > 1 ? ' notebooks' : ' notebook'}</span>
       </div>
 
-      <NewNoteBookModal
-        isOpen={showNewNotebookModal}
-        onClose={closeNewNotebookModal}
-      >
-      </NewNoteBookModal>
+      {recentNotebooks.length > 0 && (
+        <>
+          <div className="flex-between mb-12">
+            <div className="section-label" style={{ margin: 0 }}>Continue learning</div>
+            <button className="btn btn-ghost btn-xs" onClick={() => navigate('/library')}>
+              See all
+            </button>
+          </div>
+          <div className="reviewed-strip mb-36">
+            {recentNotebooks.map((nb, i) => (
+              <ReviewCard key={nb.id} notebook={nb} index={i} />
+            ))}
+          </div>
+        </>
+      )}
+
+      <div className="flex-between mb-12">
+        <div className="section-label" style={{ margin: 0 }}>Recently edited</div>
+        <button className="btn btn-ghost btn-xs" onClick={() => navigate('/library')}>
+          See all
+        </button>
+      </div>
+
+      {recentLibraryNotebooks.length > 0 ? (
+        <div className="nb-grid">
+          {recentLibraryNotebooks.map((nb, i) => (
+            <NbCard key={nb.id} notebook={nb} index={i} setCurrentNotebook={setCurrentNotebook}/>
+          ))}
+        </div>
+      ) : (
+        <p className="dash-empty">No notebooks yet. <button className="dash-empty-link" onClick={() => setShowNewNotebookModal(true)}>Create one</button> to start learning.</p>
+      )}
+
+      <NewNoteBookModal isOpen={showNewNotebookModal} onClose={() => setShowNewNotebookModal(false)} />
     </div>
   );
 };
